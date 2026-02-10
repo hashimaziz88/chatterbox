@@ -14,25 +14,28 @@
     <link rel="stylesheet" href="../styles/main-chats.css" />
   </head>
   <body>
-    <a type="button" href="pages/sign-in.html">Login</a>
-    <a type="button" href="pages/sign-up.html">Register</a>
+    <a type="button" href="./sign-in.html">Login</a>
+    <a type="button" href="./sign-up.html">Register</a>
     <a type="button" href="/">HOME</a>
     <h1>Main Chats</h1>
     <div class="container-chats">
       <div class="left-side-chats">
-        <div>
-          <nav>
-            <ul>
-              <li><a href="./my-profile.html">My Profile</a></li>
-              <li><a href="#">Logout</a></li>
-            </ul>
-          </nav>
-        </div>
-        <div>
+        <nav>
           <ul>
-            <li><a href="#">Online</a></li>
-            <li><a href="#">Chats</a></li>
-            <li><a href="#">Groups</a></li>
+            <li>
+              <a href="./my-profile.html" class="nav-button">My Profile</a>
+            </li>
+            <li id="hidden-button">
+              <a href="#" class="nav-button">XXX</a>
+            </li>
+            <li><a href="#" class="nav-button">Logout</a></li>
+          </ul>
+        </nav>
+        <div class="nav-chats">
+          <ul>
+            <li><a href="#" class="nav-button">Online</a></li>
+            <li><a href="#" class="nav-button">Chats</a></li>
+            <li><a href="#" class="nav-button">Groups</a></li>
           </ul>
         </div>
       </div>
