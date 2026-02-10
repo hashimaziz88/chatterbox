@@ -1,0 +1,12 @@
+.form-group label {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+.form-group input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+.form-group {
+  margin-bottom: 1rem;
+}
