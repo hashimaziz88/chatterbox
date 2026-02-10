@@ -3,6 +3,9 @@
   padding: 0;
   box-sizing: border-box;
   border: 1px solid red;
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  font-style: normal;
 }
 
 .container {
@@ -19,16 +22,20 @@
 }
 
 .right-side {
-  /* flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center; */
   display: none;
 }
 
 .img-leave {
   width: 100%;
   height: 100vh;
+}
+
+.landing-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
 }
 
 /* 2. Media query for desktop view (adjust breakpoint as needed) */
