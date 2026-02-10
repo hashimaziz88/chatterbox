@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 1px solid red;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.left-side {
+  flex: 1.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-side {
+  /* flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
+  display: none;
+}
+
+.img-leave {
+  width: 100%;
+  height: 100vh;
+}
+
+/* 2. Media query for desktop view (adjust breakpoint as needed) */
+@media screen and (min-width: 992px) {
+  .right-side {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
