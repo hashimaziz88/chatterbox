@@ -5,14 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign In</title>
     <link rel="stylesheet" href="../styles/styles.css" />
+    <link rel="stylesheet" href="../styles/sign-in.css" />
+    <style>
+      /* labels above inputs, inputs full-width on their own line */
+      /* .form-group label {
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+      .form-group input {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .form-group {
+        margin-bottom: 1rem;
+      } */
+    </style>
   </head>
   <body>
     <div class="container">
       <div class="left-side">
         <div class="landing-box">
-          <a type="button" href="./sign-up.html">Register</a>
           <a type="button" href="/">Home</a>
-          <h1>Sign In</h1>
+          <div>
+            <h1>Welcome back!</h1>
+            <h2>Enter your Credentials to access your account</h2>
+          </div>
+          <div>
+            <form>
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input id="username" name="username" type="text" />
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" />
+              </div>
+            </form>
+          </div>
+          <div>
+            <p>Don't have an account? <a href="./sign-up.html">Sign Up</a></p>
+          </div>
         </div>
       </div>
       <div class="right-side">
