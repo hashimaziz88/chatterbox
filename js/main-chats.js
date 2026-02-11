@@ -93,6 +93,7 @@ const renderContacts = () => {
     return;
   }
 
+  // Render Indvidual Online users or All users based on tab
   listToRender.forEach((user) => {
     const isOnline = onlineNames.includes(user.username);
     const li = document.createElement("li");
