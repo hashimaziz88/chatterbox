@@ -69,9 +69,8 @@
 /* 2. Media query for desktop view (adjust breakpoint as needed) */
 @media screen and (min-width: 992px) {
   .right-side {
-    flex: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
   }
+
+  
 }
