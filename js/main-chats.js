@@ -13,10 +13,18 @@ const chatForm = document.getElementById("chat-form");
 const messageInput = document.getElementById("message-input");
 const groupModal = document.getElementById("group-modal");
 const userSelectionList = document.getElementById("user-selection-list");
+const leftSidebar = document.querySelector(".left-side-chats");
+const rightChatArea = document.querySelector(".right-side-chats");
+const backBtn = document.getElementById("back-to-list");
 
 // 1. Initial Check: Redirect if not logged in
 if (!activeUser) {
   window.location.href = "sign-in.html";
+}
+
+// Initialize mobile view: show list, hide chat
+if (window.innerWidth <= 860) {
+  rightChatArea.classList.add("hide-mobile");
 }
 
 // if (activeUser) {
@@ -107,6 +115,13 @@ const renderContacts = () => {
 // 4. Switch Chat Recipient (Updates title and avatar initials)
 const switchChat = (recipient) => {
   activeRecipient = recipient;
+
+  // Mobile: Switch views
+  if (window.innerWidth <= 860) {
+    leftSidebar.classList.add("hide-mobile");
+    rightChatArea.classList.remove("hide-mobile");
+  }
+
   const avatarHeader = document.getElementById("active-chat-avatar");
 
   if (recipient.startsWith("group_")) {
@@ -246,6 +261,11 @@ document.getElementById("close-modal").onclick = () => {
 //   }
 // });
 
+// Back Button Logic
+backBtn.onclick = () => {
+  leftSidebar.classList.remove("hide-mobile");
+  rightChatArea.classList.add("hide-mobile");
+};
 // Initial load
 renderContacts();
 renderMessages();

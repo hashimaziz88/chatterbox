@@ -269,3 +269,37 @@ ul li {
 .secondary {
   background-color: #888;
 }
+
+/* Mobile responsiveness logic */
+.mobile-only {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  .mobile-only {
+    display: flex;
+    width: 40px;
+    margin-right: 10px;
+  }
+
+  /* Hide the side not currently active */
+  .left-side-chats.hide-mobile,
+  .right-side-chats.hide-mobile {
+    display: none;
+  }
+
+  /* Ensure the active side takes full width */
+  .left-side-chats,
+  .right-side-chats {
+    flex: 1;
+    width: 100%;
+  }
+
+  .container-chats {
+    flex-direction: column;
+  }
+
+  #message-input {
+    width: 90%;
+  }
+}
