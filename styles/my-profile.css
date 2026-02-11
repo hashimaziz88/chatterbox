@@ -1,72 +1,79 @@
-body {
-  background-color: #efeae2;
-}
-
-.container-chats {
-  display: flex;
-  height: 100vh;
-}
-
-.left-side-chats {
+/* Container for the profile content */
+.profile-details-container {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: white;
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+  width: 100%;
+  padding: 20px;
+  gap: 30px;
 }
 
-.right-side-chats {
-  flex: 1.5;
+/* Big Circle Avatar */
+#profile-display-avatar {
+  width: 180px;
+  height: 180px;
+  font-size: 60px;
+  background-color: #333; /* Darker grey as seen in image */
+  color: white;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Credentials section layout */
+.credentials-section {
+  width: 100%;
+  max-width: 400px; /* Limits width to look like the image */
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  gap: 20px;
 }
 
-nav,
-.nav-chats {
+.credentials-section h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+/* Input group styling */
+.input-group {
   display: flex;
-  width: 100%;
-  padding: 10px 0;
+  flex-direction: column;
+  gap: 8px;
 }
 
-#hidden-button {
-  visibility: hidden;
+.input-group label {
+  font-size: 14px;
+  font-weight: 600;
 }
 
-.nav-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.input-group input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-size: 14px;
+}
 
-  width: 80%;
-  height: 30px;
-
-  background-color: #3a5b22;
+/* Save Button Styling */
+.save-btn {
+  background-color: #3a5b22; /* Dark green as seen in image */
   color: white;
   border: none;
-  border-radius: 5px;
+  padding: 12px;
+  border-radius: 8px;
   cursor: pointer;
-  text-decoration: none;
-  font-size: 10px;
-  text-align: center;
-  padding: 5px;
-  box-sizing: border-box;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 20px;
 }
 
-ul {
-  list-style: none;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  justify-content: space-evenly;
-  gap: 5px;
-}
-
-ul li {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Mobile override: Ensure content takes full width */
+@media (max-width: 860px) {
+  .credentials-section {
+    max-width: 100%;
+  }
 }
