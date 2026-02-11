@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   font-family: Poppins, sans-serif;
   font-weight: 500;
   font-style: normal;
@@ -35,15 +35,43 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 20px;
+  margin-bottom: 100px;
+}
+
+.landing-button-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.landing-button-box-button {
+  padding: 7.5px 20px;
+  background-color: #3a5b22;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  margin: 20px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: small;
+}
+
+.left-box {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
 }
 
 /* 2. Media query for desktop view (adjust breakpoint as needed) */
 @media screen and (min-width: 992px) {
   .right-side {
-    flex: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
+  }
+  .left-box {
+    width: 60%;
   }
 }

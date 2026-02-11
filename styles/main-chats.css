@@ -1,0 +1,76 @@
+body {
+  background-color: #efeae2;
+}
+
+.container-chats {
+  display: flex;
+  height: 100vh;
+}
+
+.left-side-chats {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.right-side-chats {
+  flex: 1.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+nav,
+.nav-chats {
+  display: flex;
+  width: 100%;
+  padding: 10px 0;
+}
+
+#hidden-button {
+  visibility: hidden;
+}
+
+/* 
+Had issues with button styling based off of buttons from styles.css, so I created a new class for the buttons in the nav bar.
+*/
+.nav-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* This ensures the button fills the <li> container */
+  width: 80%;
+  height: 30px; /* Set a fixed height for vertical consistency */
+
+  background-color: #3a5b22;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 10px;
+  text-align: center;
+  padding: 5px;
+  box-sizing: border-box; /* Ensures padding doesn't break the width */
+}
+
+/* was struggling to align and size buttons the same this was the working implementation*/
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  justify-content: space-evenly;
+  gap: 5px; /* Adds a small, consistent gap between buttons */
+}
+
+ul li {
+  flex: 1; /* This forces every <li> to be the exact same width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
