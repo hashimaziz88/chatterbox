@@ -1,3 +1,6 @@
+import { SessionManager } from "./sessionmanager.js";
+import { Message } from "./message.js";
+
 export const ChatStore = {
   // Identify who is using this specific tab
   getActiveUser() {
@@ -6,12 +9,10 @@ export const ChatStore = {
 
   // Get all messages for the real-time display
   getMessages() {
-    return Message.getAll(); // Uses your Message model
+    return Message.getAll();
   },
 
   // Get all users and filter which ones are "Online"
-  // Note: For this project, you can treat users in the 'onlineUsers'
-  // array in localStorage as active.
   getOnlineUsers() {
     const allUsers = JSON.parse(localStorage.getItem("users")) || [];
     const onlineNames = JSON.parse(localStorage.getItem("onlineUsers")) || [];

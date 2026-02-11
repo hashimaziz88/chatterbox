@@ -7,6 +7,10 @@ body {
   height: 100vh;
 }
 
+.sidebar-header {
+  padding: 10px;
+}
+
 .left-side-chats {
   flex: 1;
   display: flex;
@@ -18,12 +22,14 @@ body {
   flex: 1.5;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  height: 100%;
 }
 nav,
 .nav-chats {
   display: flex;
+  flex-direction: row;
   width: 100%;
   padding: 10px 0;
 }
@@ -52,15 +58,15 @@ Had issues with button styling based off of buttons from styles.css, so I create
   text-decoration: none;
   font-size: 10px;
   text-align: center;
-  padding: 5px;
   box-sizing: border-box; /* Ensures padding doesn't break the width */
+  margin: 5px;
 }
 
 /* was struggling to align and size buttons the same this was the working implementation*/
 ul {
   list-style: none;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -71,6 +77,190 @@ ul {
 ul li {
   flex: 1; /* This forces every <li> to be the exact same width */
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
+
+.chat-header {
+  width: 100%;
+  padding: 10px;
+}
+
+.chat-display {
+  width: 80%;
+}
+
+.chat-tabs {
+  padding: 10px;
+  border-bottom: solid 1px #e9edef;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.message-wrapper.sent {
+  justify-content: flex-end;
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  position: relative;
+}
+
+.active-user-info {
+  display: flex;
+  flex-direction: row;
+}
+
+#active-chat-title {
+  display: flex;
+  align-items: center;
+  font-size: 22.5px;
+}
+
+.chat-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  background-color: #f0f2f5;
+  height: 7.5%;
+}
+
+#message-input {
+  width: 80%;
+  height: 100%;
+  border-radius: 7.5px;
+  padding-left: 50px;
+}
+
+.message-wrapper {
+  display: flex;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.message-wrapper.sent {
+  justify-content: flex-end;
+}
+
+.message-bubble {
+  max-width: 65%;
+  min-width: 30%;
+  padding: 6px 12px;
+  border-radius: 8px;
+  position: relative;
+  font-size: 14px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.sent .message-bubble {
+  background-color: #dcf8c6;
+}
+
+.received .message-bubble {
+  background-color: #ffffff;
+}
+
+.timestamp {
+  font-size: 8px;
+  color: #888;
+  display: block;
+  text-align: end;
+}
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.contact-item {
+  border-bottom: solid 1px #e9edef;
+  width: 100%;
+  padding: 10px;
+}
+
+/* 
+.contact-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  border-bottom: 1px solid #f2f2f2;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.contact-item:hover,
+.contact-item.active {
+  background-color: #f5f5f5;
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  position: relative;
+}
+
+.online-indicator::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 10px;
+  height: 10px;
+  background-color: #4cd137;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.message-wrapper {
+  display: flex;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.message-wrapper.sent {
+  justify-content: flex-end;
+}
+
+.message-bubble {
+  max-width: 65%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  position: relative;
+  font-size: 14px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.sent .message-bubble {
+  background-color: #dcf8c6;
+}
+
+.received .message-bubble {
+  background-color: #ffffff;
+}
+
+.timestamp {
+  font-size: 10px;
+  color: #888;
+  display: block;
+  text-align: right;
+  margin-top: 4px;
+} */
