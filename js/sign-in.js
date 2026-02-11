@@ -31,6 +31,6 @@ document.getElementById("signin-form").addEventListener("submit", (event) => {
 
 const redirectToHome = () => {
   setTimeout(() => {
-    window.location.href = "/pages/main-chats.html";
+    window.location.href = "chatterbox/pages/main-chats.html";
   }, 2000);
 };
