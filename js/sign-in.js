@@ -1,3 +1,7 @@
+import { User } from "../models/user.js";
+import { SessionManager } from "../models/sessionmanager.js";
+import { ChatStore } from "../models/chatstore.js";
+
 document
   .getElementById("signin-form")
   .addEventListener("submit", function (event) {
@@ -6,25 +10,25 @@ document
     const password = document.getElementById("password").value;
     const messageEl = document.getElementById("signInMessage");
 
-    // Retrieve existing users
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-
-    // Find the user
-    const foundUser = users.find(
-      (user) => user.username === username && user.password === password,
-    );
+    // Use User Model to validate credentials and non-existing users [cite: 43]
+    const foundUser = User.authenticate(username, password);
 
     if (foundUser) {
       messageEl.textContent = "Login successful! Welcome, " + username;
-      // Optional: Store the logged-in user's info for session management
-      localStorage.setItem("loggedInUser", JSON.stringify(foundUser));
-      // Redirect to another page if needed, e.g., window.location.href = 'home.html';
+
+      // Use SessionManager to store the logged-in user's info for this tab [cite: 32]
+      SessionManager.login(foundUser);
+
+      // Update online status in the shared ChatStore [cite: 35]
+      ChatStore.setOnlineStatus(username, true);
+
+      redirectToHome();
     } else {
       messageEl.textContent = "Invalid username or password!";
     }
+
     // Clear the form
-    document.getElementById("signin-form").reset();
-    redirectToHome();
+    this.reset();
   });
 
 function redirectToHome() {

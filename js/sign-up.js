@@ -1,3 +1,5 @@
+import { User } from "../models/user.js";
+
 document
   .getElementById("signup-form")
   .addEventListener("submit", function (event) {
@@ -7,21 +9,20 @@ document
     const password = document.getElementById("signupPassword").value;
     const messageEl = document.getElementById("signupMessage");
 
-    // Retrieve existing users or initialize an empty array
-    let users = JSON.parse(localStorage.getItem("users")) || [];
-
-    // Check if user already exists
-    if (users.some((user) => user.username === username)) {
+    // Use Model to ensure usernames are unique [cite: 44]
+    if (!User.isUsernameUnique(username)) {
       messageEl.textContent = "Username already exists!";
       return;
     }
 
-    // Add new user
-    users.push({ username: username, email: email, password: password });
-    // Save updated users array back to localStorage as a JSON string
-    localStorage.setItem("users", JSON.stringify(users));
+    // Use Model to create a new user instance
+    const newUser = new User(username, email, password);
+
+    // Use Model to handle persistence in JSON format
+    User.register(newUser);
 
     messageEl.textContent = "Sign up successful! You can now log in.";
+
     // Clear the form
-    document.getElementById("signup-form").reset();
+    this.reset();
   });
