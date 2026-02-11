@@ -18,7 +18,7 @@ document.getElementById("signin-form").addEventListener("submit", (event) => {
     SessionManager.login(foundUser);
 
     // Update online status in the shared ChatStore
-    ChatStore.setOnlineStatus(username, true);
+    ChatStore.setOnlineStatus(foundUser.username, true);
 
     redirectToHome();
   } else {
@@ -31,6 +31,6 @@ document.getElementById("signin-form").addEventListener("submit", (event) => {
 
 const redirectToHome = () => {
   setTimeout(() => {
-    window.location.href = "chatterbox/pages/main-chats.html";
+    window.location.href = "/chatterbox/pages/main-chats.html";
   }, 2000);
 };

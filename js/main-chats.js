@@ -2,63 +2,87 @@ import { Message } from "../models/message.js";
 import { ChatStore } from "../models/chatstore.js";
 import { SessionManager } from "../models/sessionmanager.js";
 
-// State Management
-let activeRecipient = "online"; // Default view
+let activeRecipient = "online";
+let currentTab = "online"; // 'online', 'chats', or 'groups'
 const activeUser = ChatStore.getActiveUser();
 
-// Elements
 const contactList = document.getElementById("contact-list");
 const chatMessages = document.getElementById("chat-messages");
 const chatTitle = document.getElementById("active-chat-title");
 const chatForm = document.getElementById("chat-form");
 const messageInput = document.getElementById("message-input");
+const groupModal = document.getElementById("group-modal");
+const userSelectionList = document.getElementById("user-selection-list");
 
-// 1. Initial Check: Redirect if not logged in]
+// 1. Initial Check: Redirect if not logged in
 if (!activeUser) {
   window.location.href = "sign-in.html";
 }
 
-// State Management for UI tabs
-let currentTab = "online"; // 'online', 'chats', or 'groups'
+// if (activeUser) {
+//   // Set status to true on every load/refresh
+//   ChatStore.setOnlineStatus(activeUser.username, true);
+// }
+// renderContacts();
+// renderMessages();
 
-// Elements for tab switching
+// 2. Tab Switching Logic
 const tabButtons = document.querySelectorAll(".tab-btn");
-
-// 1. Tab Switching Logic
 tabButtons.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     tabButtons.forEach((b) => b.classList.remove("active"));
     e.target.classList.add("active");
     currentTab = e.target.getAttribute("data-tab");
-    renderContacts(); // Refresh list based on selected tab
+    renderContacts();
   });
 });
 
-// 2. Updated Contact Rendering
+// 3. Contact Rendering Logic
 const renderContacts = () => {
   const allUsers = JSON.parse(localStorage.getItem("users")) || [];
   const onlineNames = JSON.parse(localStorage.getItem("onlineUsers")) || [];
-  contactList.innerHTML = "";
+  const allGroups = JSON.parse(localStorage.getItem("groups")) || [];
 
+  contactList.innerHTML = "";
   let listToRender = [];
 
   if (currentTab === "online") {
-    // Only show users who are currently online
     listToRender = allUsers.filter(
       (u) =>
         onlineNames.includes(u.username) && u.username !== activeUser.username,
     );
   } else if (currentTab === "chats") {
-    // Show all registered users (Online and Offline)0]
     listToRender = allUsers.filter((u) => u.username !== activeUser.username);
   } else if (currentTab === "groups") {
-    // Show Group Chat option
-    const li = document.createElement("li");
-    li.className = `contact-item ${activeRecipient === "Group" ? "active" : ""}`;
-    li.innerHTML = `<div class="avatar group-avatar">G</div> <span>Global Group Chat</span>`;
-    li.onclick = () => switchChat("Group");
-    contactList.appendChild(li);
-    return; // Exit early as groups are handled specifically
+    // Add "Create Group" trigger
+    const createLi = document.createElement("li");
+    createLi.className = "contact-item create-group-trigger";
+    createLi.innerHTML = `
+      <div class="avatar plus-avatar">+</div>
+      <div class="contact-info">
+        <span class="contact-name">Create New Group</span>
+      </div>
+    `;
+    createLi.onclick = openGroupModal;
+    contactList.appendChild(createLi);
+
+    // List user-specific groups
+    const myGroups = allGroups.filter((g) =>
+      g.members.includes(activeUser.username),
+    );
+    myGroups.forEach((group) => {
+      const li = document.createElement("li");
+      li.className = `contact-item ${activeRecipient === group.id ? "active" : ""}`;
+      li.innerHTML = `
+        <div class="avatar">G</div>
+        <div class="contact-info">
+          <span class="contact-name">${group.name}</span>
+        </div>
+      `;
+      li.onclick = () => switchChat(group.id);
+      contactList.appendChild(li);
+    });
+    return;
   }
 
   listToRender.forEach((user) => {
@@ -66,41 +90,53 @@ const renderContacts = () => {
     const li = document.createElement("li");
     li.className = `contact-item ${activeRecipient === user.username ? "active" : ""}`;
 
-    // UI to mimic WhatsApp-style contact list item
+    // Apply online-indicator class directly to the avatar div
     li.innerHTML = `
       <div class="avatar ${isOnline ? "online-indicator" : ""}">
         ${user.username.charAt(0).toUpperCase()}
       </div>
       <div class="contact-info">
         <span class="contact-name">${user.username}</span>
-        <span class="status-text">${isOnline ? "online" : "offline"}</span>
       </div>
     `;
-
     li.onclick = () => switchChat(user.username);
     contactList.appendChild(li);
   });
 };
 
-// 3. Switch Chat Recipient
+// 4. Switch Chat Recipient (Updates title and avatar initials)
 const switchChat = (recipient) => {
   activeRecipient = recipient;
-  chatTitle.textContent =
-    recipient === "Group" ? "Global Group Chat" : recipient;
+  const avatarHeader = document.getElementById("active-chat-avatar");
+
+  if (recipient.startsWith("group_")) {
+    const allGroups = JSON.parse(localStorage.getItem("groups")) || [];
+    const foundGroup = allGroups.find((g) => g.id === recipient);
+
+    chatTitle.textContent = foundGroup ? foundGroup.name : "Unknown Group";
+    // Set Group Initial
+    avatarHeader.textContent = foundGroup
+      ? foundGroup.name.charAt(0).toUpperCase()
+      : "G";
+  } else {
+    chatTitle.textContent = recipient;
+    // Set User Initial
+    avatarHeader.textContent = recipient.charAt(0).toUpperCase();
+  }
+
   renderMessages();
   renderContacts();
 };
 
-// 4. Render Messages with Filtering 
+// 5. Message Rendering with Filtering
 const renderMessages = () => {
   const allMessages = ChatStore.getMessages();
   chatMessages.innerHTML = "";
 
   const filtered = allMessages.filter((msg) => {
-    if (activeRecipient === "Group") {
-      return msg.recipient === "Group";
+    if (activeRecipient.startsWith("group_")) {
+      return msg.recipient === activeRecipient;
     }
-    // Private Chat Filter: (Me to Them) OR (Them to Me)
     return (
       (msg.sender === activeUser.username &&
         msg.recipient === activeRecipient) ||
@@ -121,35 +157,95 @@ const renderMessages = () => {
     `;
     chatMessages.appendChild(msgDiv);
   });
-  chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
+  chatMessages.scrollTop = chatMessages.scrollHeight;
 };
 
-// 5. Send Message Logic
+// 6. Send Message Logic
 chatForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const text = messageInput.value.trim();
   if (text) {
     const newMsg = new Message(activeUser.username, text, activeRecipient);
-    Message.save(newMsg); // Persists to localStorage
+    Message.save(newMsg);
     messageInput.value = "";
     renderMessages();
   }
 });
 
-// 6. Real-Time Sync via Storage Event 
+// 7. Real-Time Sync
 window.addEventListener("storage", (event) => {
-  if (event.key === "messages" || event.key === "onlineUsers") {
+  if (
+    event.key === "messages" ||
+    event.key === "onlineUsers" ||
+    event.key === "groups"
+  ) {
     renderMessages();
     renderContacts();
   }
 });
 
-// 7. Logout Logic 
+// 8. Logout Logic
 document.getElementById("logout-btn").onclick = () => {
   ChatStore.setOnlineStatus(activeUser.username, false);
   SessionManager.logout();
 };
 
-// Initialize
+// 9. Group Management Logic
+const openGroupModal = () => {
+  const allUsers = JSON.parse(localStorage.getItem("users")) || [];
+  userSelectionList.innerHTML = "";
+
+  allUsers
+    .filter((u) => u.username !== activeUser.username)
+    .forEach((user) => {
+      const div = document.createElement("div");
+      div.className = "user-checkbox-item";
+      div.innerHTML = `
+      <input type="checkbox" class="group-member-checkbox" value="${user.username}">
+      <span>${user.username}</span>
+    `;
+      userSelectionList.appendChild(div);
+    });
+
+  groupModal.classList.remove("hidden");
+};
+
+document.getElementById("confirm-create-group").onclick = () => {
+  const groupName = document.getElementById("new-group-name").value.trim();
+  const checkboxes = document.querySelectorAll(
+    ".group-member-checkbox:checked",
+  );
+  const selectedMembers = Array.from(checkboxes).map((cb) => cb.value);
+
+  if (groupName && selectedMembers.length > 0) {
+    const groups = JSON.parse(localStorage.getItem("groups")) || [];
+    const newGroup = {
+      id: "group_" + Date.now(),
+      name: groupName,
+      members: [...selectedMembers, activeUser.username],
+    };
+
+    groups.push(newGroup);
+    localStorage.setItem("groups", JSON.stringify(groups));
+
+    groupModal.classList.add("hidden");
+    document.getElementById("new-group-name").value = "";
+    renderContacts();
+  }
+};
+
+document.getElementById("close-modal").onclick = () => {
+  groupModal.classList.add("hidden");
+  document.getElementById("new-group-name").value = "";
+};
+
+// // 10. Browser Exit Cleanup
+// window.addEventListener("beforeunload", () => {
+//   if (activeUser) {
+//     ChatStore.setOnlineStatus(activeUser.username, false);
+//   }
+// });
+
+// Initial load
 renderContacts();
 renderMessages();

@@ -52,7 +52,36 @@
         </form>
       </main>
     </div>
+    <div id="group-modal" class="modal hidden">
+      <div class="modal-content">
+        <header class="modal-header">
+          <h3>Create New Group</h3>
+          <p>Give your group a name and select members.</p>
+        </header>
 
+        <div class="form-group">
+          <label for="new-group-name">Group Name</label>
+          <input
+            type="text"
+            id="new-group-name"
+            placeholder="e.g., Designers Corner"
+            required
+          />
+        </div>
+
+        <div class="user-selection-container">
+          <label>Select Members</label>
+          <div id="user-selection-list" class="selection-list"></div>
+        </div>
+
+        <footer class="modal-actions">
+          <button id="close-modal" class="nav-button secondary">Cancel</button>
+          <button id="confirm-create-group" class="nav-button">
+            Create Group
+          </button>
+        </footer>
+      </div>
+    </div>
     <script type="module" src="../js/main-chats.js"></script>
   </body>
 </html>
