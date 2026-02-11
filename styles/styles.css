@@ -63,7 +63,7 @@
 .left-box {
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 80%;
 }
 
 /* 2. Media query for desktop view (adjust breakpoint as needed) */
@@ -71,6 +71,7 @@
   .right-side {
     display: flex;
   }
-
-  
+  .left-box {
+    width: 60%;
+  }
 }

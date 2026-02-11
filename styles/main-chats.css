@@ -21,22 +21,20 @@ body {
   justify-content: center;
   align-items: center;
 }
-
-/* 2. Media query for desktop view (adjust breakpoint as needed) */
-@media screen and (min-width: 992px) {
-}
-
 nav,
 .nav-chats {
   display: flex;
   width: 100%;
-  padding: 10px 0; /* Adds some vertical breathing room */
+  padding: 10px 0;
 }
 
 #hidden-button {
   visibility: hidden;
 }
 
+/* 
+Had issues with button styling based off of buttons from styles.css, so I created a new class for the buttons in the nav bar.
+*/
 .nav-button {
   display: flex;
   align-items: center;
@@ -58,6 +56,7 @@ nav,
   box-sizing: border-box; /* Ensures padding doesn't break the width */
 }
 
+/* was struggling to align and size buttons the same this was the working implementation*/
 ul {
   list-style: none;
   display: flex;

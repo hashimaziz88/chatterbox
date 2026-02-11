@@ -31,5 +31,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 150px;
+  margin-top: 50px;
+}
+
+/* 2. Media query for desktop view (adjust breakpoint as needed) */
+@media screen and (min-width: 992px) {
+  .have-text-box {
+    margin-top: 150px;
+  }
 }

@@ -14,39 +14,52 @@
     <link rel="stylesheet" href="../styles/sign-in.css" />
   </head>
   <body>
-    <a type="button" href="/">Home</a>
-    <div class="container">
-      <div class="left-side">
+    <nav aria-label="Primary">
+      <!-- <a href="/">Home</a> -->
+
+      <a type="button" href="/chatterbox">HOME</a>
+    </nav>
+
+    <main class="container">
+      <section class="left-side">
         <div class="left-box">
-          <div class="landing-box-sign-in">
-            <div>
-              <h1>Welcome Back!</h1>
-              <h4>Enter your Credentials to access your account</h4>
+          <header class="landing-box-sign-in">
+            <h1>Welcome Back!</h1>
+            <p>Enter your Credentials to access your account</p>
+          </header>
+
+          <form id="signin-form">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input id="username" name="username" type="text" required />
             </div>
-          </div>
-          <div>
-            <form>
-              <div class="form-group">
-                <label for="username">Username</label>
-                <input id="username" name="username" type="text" />
-              </div>
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input id="password" name="password" type="password" />
-              </div>
-            </form>
-          </div>
-          <div class="landing-button-box">
-            <a type="button" class="landing-button-box-button">Login</a>
-          </div>
-          <div class="have-text-box">
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input id="password" name="password" type="password" required />
+            </div>
+
+            <div class="landing-button-box">
+              <button type="submit" class="landing-button-box-button">
+                Login
+              </button>
+            </div>
+          </form>
+
+          <footer class="have-text-box">
             <p>Don't have an account? <a href="./sign-up.html">Sign Up</a></p>
-          </div>
+          </footer>
         </div>
-      </div>
-      <div class="right-side">
-        <img src="../assets/images/leaves.jpg" alt="leaves" class="img-leave" />
-      </div>
-    </div>
+      </section>
+
+      <aside class="right-side">
+        <figure>
+          <img
+            src="../assets/images/leaves.jpg"
+            alt="Decorative green leaves"
+            class="img-leave"
+          />
+        </figure>
+      </aside>
+    </main>
   </body>
 </html>
