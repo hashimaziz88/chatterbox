@@ -22,15 +22,11 @@ body {
   align-items: center;
 }
 
-/* 2. Media query for desktop view (adjust breakpoint as needed) */
-@media screen and (min-width: 992px) {
-}
-
 nav,
 .nav-chats {
   display: flex;
   width: 100%;
-  padding: 10px 0; /* Adds some vertical breathing room */
+  padding: 10px 0;
 }
 
 #hidden-button {
@@ -42,9 +38,8 @@ nav,
   align-items: center;
   justify-content: center;
 
-  /* This ensures the button fills the <li> container */
   width: 80%;
-  height: 30px; /* Set a fixed height for vertical consistency */
+  height: 30px;
 
   background-color: #3a5b22;
   color: white;
@@ -55,7 +50,7 @@ nav,
   font-size: 10px;
   text-align: center;
   padding: 5px;
-  box-sizing: border-box; /* Ensures padding doesn't break the width */
+  box-sizing: border-box;
 }
 
 ul {
@@ -66,11 +61,11 @@ ul {
   margin: 0;
   padding: 0;
   justify-content: space-evenly;
-  gap: 5px; /* Adds a small, consistent gap between buttons */
+  gap: 5px;
 }
 
 ul li {
-  flex: 1; /* This forces every <li> to be the exact same width */
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
