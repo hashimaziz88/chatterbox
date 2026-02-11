@@ -9,7 +9,7 @@ document
     const password = document.getElementById("signupPassword").value;
     const messageEl = document.getElementById("signupMessage");
 
-    // Use Model to ensure usernames are unique [cite: 44]
+    // Use Model to ensure usernames are unique
     if (!User.isUsernameUnique(username)) {
       messageEl.textContent = "Username already exists!";
       return;

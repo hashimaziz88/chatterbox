@@ -10,16 +10,16 @@ document
     const password = document.getElementById("password").value;
     const messageEl = document.getElementById("signInMessage");
 
-    // Use User Model to validate credentials and non-existing users [cite: 43]
+    // Use User Model to validate credentials and non-existing users
     const foundUser = User.authenticate(username, password);
 
     if (foundUser) {
       messageEl.textContent = "Login successful! Welcome, " + username;
 
-      // Use SessionManager to store the logged-in user's info for this tab [cite: 32]
+      // Use SessionManager to store the logged-in user's info for this tab  
       SessionManager.login(foundUser);
 
-      // Update online status in the shared ChatStore [cite: 35]
+      // Update online status in the shared ChatStore
       ChatStore.setOnlineStatus(username, true);
 
       redirectToHome();
