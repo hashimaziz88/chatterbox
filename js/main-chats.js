@@ -207,6 +207,13 @@ const renderMessages = () => {
  */
 chatForm.addEventListener("submit", (e) => {
   e.preventDefault();
+
+  // Safety check: ensure we aren't sending to the default state
+  if (!activeRecipient || activeRecipient === "online") {
+    alert("Please select a contact or group to chat with.");
+    return;
+  }
+
   const text = messageInput.value.trim();
   if (text) {
     const newMsg = new Message(activeUser.username, text, activeRecipient);
