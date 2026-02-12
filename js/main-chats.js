@@ -173,7 +173,7 @@ const renderMessages = () => {
     msgDiv.className = `message-wrapper ${isMe ? "sent" : "received"}`;
     msgDiv.innerHTML = `
       <div class="message-bubble">
-        <small class="sender-name">${msg.sender}</small>
+        <small class="sender-name">- ${msg.sender}</small>
         <p>${msg.text}</p>
         <span class="timestamp">${msg.timestamp}</span>
       </div>
