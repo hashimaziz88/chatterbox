@@ -1,3 +1,5 @@
+import { sha256 } from "../utils/encrypt.js";
+
 /**
  * User model to represent user data and handle registration/authentication logic. * This model interacts with localStorage to persist
  *  user data across sessions, allowing for user registration and authentication.  * It provides methods to check for unique usernames,
@@ -29,6 +31,17 @@ export class User {
   static isUsernameUnique(username) {
     const users = JSON.parse(localStorage.getItem("users")) || [];
     return !users.some((u) => u.username === username);
+  }
+
+  /**
+   * Checks if an email is unique (i.e., not already taken by another user).
+   * @param {string} email
+   * @returns {boolean} True if the email is unique, false otherwise.
+   */
+  static isEmailUnique(email) {
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    console.log(!users.some((u) => u.email === email));
+    return !users.some((u) => u.email === email);
   }
 
   /**

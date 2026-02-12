@@ -34,7 +34,7 @@ document
       messageEl.style.color = "red";
     }
 
-    this.reset();
+    event.target.reset();
   });
 
 /**

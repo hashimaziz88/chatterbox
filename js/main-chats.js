@@ -21,9 +21,25 @@ if (!activeUser) {
   window.location.href = "sign-in.html";
 }
 
-if (window.innerWidth <= 860) {
-  rightChatArea.classList.add("hide-mobile");
-}
+/**
+ * Initializes the mobile view by checking the window width and adjusting the visibility of the left sidebar (contact list) and right chat area
+ *  accordingly. If the window width is 860 pixels or less, it shows the left sidebar and hides the right chat area to optimize for mobile devices.
+ *  If the window width is greater than 860 pixels, it ensures that both the left sidebar and right chat area are visible for desktop users. This
+ *  function is called on page load and also whenever the window is resized to maintain a responsive design.
+ */
+const initMobileView = () => {
+  if (window.innerWidth <= 860) {
+    leftSidebar.classList.remove("hide-mobile");
+    rightChatArea.classList.add("hide-mobile");
+  } else {
+    leftSidebar.classList.remove("hide-mobile");
+    rightChatArea.classList.remove("hide-mobile");
+  }
+};
+
+initMobileView();
+
+window.addEventListener("resize", initMobileView);
 
 /**
  * Tab Switching Logic: Adds click event listeners to the tab buttons (Online, Chats, Groups) that update the active tab state
@@ -115,7 +131,8 @@ const renderContacts = () => {
  *
  * @param {string} recipient username or group ID of the new active chat recipient. If the recipient is a group, it updates the chat title
  * and avatar to reflect the group name. If it's a user, it sets the chat title and avatar to the user's name. It also handles mobile view
- * adjustments by showing/hiding the appropriate sections of the UI. Finally, it calls renderMessages() and renderContacts() to update the displayed messages and contact list based on the new active recipient.
+ * adjustments by showing/hiding the appropriate sections of the UI. Finally, it calls renderMessages() and renderContacts() to update the
+ * displayed messages and contact list based on the new active recipient.
  */
 const switchChat = (recipient) => {
   activeRecipient = recipient;
@@ -173,7 +190,7 @@ const renderMessages = () => {
     msgDiv.className = `message-wrapper ${isMe ? "sent" : "received"}`;
     msgDiv.innerHTML = `
       <div class="message-bubble">
-        <small class="sender-name">${msg.sender}</small>
+        <small class="sender-name">- ${msg.sender}</small>
         <p>${msg.text}</p>
         <span class="timestamp">${msg.timestamp}</span>
       </div>
@@ -190,6 +207,12 @@ const renderMessages = () => {
  */
 chatForm.addEventListener("submit", (e) => {
   e.preventDefault();
+
+  if (!activeRecipient || activeRecipient === "online") {
+    alert("Please select a contact or group to chat with.");
+    return;
+  }
+
   const text = messageInput.value.trim();
   if (text) {
     const newMsg = new Message(activeUser.username, text, activeRecipient);
@@ -262,7 +285,6 @@ document.getElementById("confirm-create-group").onclick = () => {
     ".group-member-checkbox:checked",
   );
   const selectedMembers = Array.from(checkboxes).map((cb) => cb.value);
-
   if (groupName && selectedMembers.length > 0) {
     const groups = JSON.parse(localStorage.getItem("groups")) || [];
     const newGroup = {

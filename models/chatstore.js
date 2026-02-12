@@ -25,16 +25,6 @@ export const ChatStore = {
   },
 
   /**
-   * Returns the list of online users.
-   * @returns {Array} An array of online user objects.
-   */
-  getOnlineUsers() {
-    const allUsers = JSON.parse(localStorage.getItem("users")) || [];
-    const onlineNames = JSON.parse(localStorage.getItem("onlineUsers")) || [];
-    return allUsers.filter((u) => onlineNames.includes(u.username));
-  },
-
-  /**
    * Sets the online status of a user. It updates the global 'onlineUsers' list in localStorage for cross-tab tracking, updates the specific user's
    * 'isOnline' property in localStorage, and updates the SessionStorage for the current tab if the active user is the one being updated. This ensures
    * that the user's online status is accurately reflected across the application.
