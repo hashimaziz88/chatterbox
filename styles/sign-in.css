@@ -1,13 +1,16 @@
+/* Sign-in page specific styles and resets*/
 * {
   font-family: Poppins, sans-serif;
   font-weight: 500;
   font-style: normal;
 }
 
+/* Form group styling for sign-in page */
 .form-group label {
   display: block;
   margin-bottom: 0.25rem;
 }
+
 .form-group input {
   display: block;
   width: 100%;
@@ -16,16 +19,19 @@
   border: 1px solid #ccc;
   padding: 0.5rem;
 }
+
 .form-group {
   margin-bottom: 1rem;
 }
+
+
 
 .landing-box-sign-in {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding: 0 0 100px 0;
+  padding: 0 0 0 0;
 }
 
 .have-text-box {
@@ -35,7 +41,7 @@
   margin-top: 50px;
 }
 
-/* Media query for desktop view */
+/* Mobile and Desktop Responsiveness */
 @media screen and (min-width: 992px) {
   .have-text-box {
     margin-top: 150px;

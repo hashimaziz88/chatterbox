@@ -8,18 +8,21 @@
     <link rel="stylesheet" href="../styles/main-chats.css" />
   </head>
   <body>
+    <!-- Main Chats Page -->
     <div class="container-chats">
+      <!-- Left Sidebar for Contacts and Navigation -->
       <aside class="left-side-chats">
+        <!-- User Navigation and Profile Access -->
+
         <header class="sidebar-header">
           <nav class="user-nav">
             <a href="./my-profile.html" class="nav-button">My Profile</a>
-            <a href="./my-profile.html" class="nav-button" id="hidden-button"
-              >My Profile</a
-            >
+            <a class="nav-button" id="hidden-button"></a>
             <button id="logout-btn" class="nav-button">Logout</button>
           </nav>
         </header>
 
+        <!-- Chat Tabs -->
         <div class="chat-tabs">
           <button class="tab-btn nav-button active" data-tab="online">
             Online
@@ -28,10 +31,13 @@
           <button class="tab-btn nav-button" data-tab="groups">Groups</button>
         </div>
 
+        <!-- Contact List Dynamically appended -->
         <ul id="contact-list" class="contact-list"></ul>
       </aside>
 
+      <!-- Right Main Area for Chat Display and Input -->
       <main class="right-side-chats">
+        <!-- Chat Header -->
         <header class="chat-header">
           <div class="active-user-info">
             <button id="back-to-list" class="nav-button mobile-only">←</button>
@@ -40,8 +46,8 @@
           </div>
         </header>
 
+        <!-- Chat Messages Display -->
         <div id="chat-messages" class="chat-display"></div>
-
         <form id="chat-form" class="chat-input-container">
           <input
             type="text"
@@ -50,9 +56,12 @@
             autocomplete="off"
             required
           />
+          <button type="submit" id="send-btn" class="nav-button">Send</button>
         </form>
       </main>
     </div>
+
+    <!-- Group Modal -->
     <div id="group-modal" class="modal hidden">
       <div class="modal-content">
         <header class="modal-header">

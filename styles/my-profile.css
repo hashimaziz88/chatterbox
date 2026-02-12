@@ -15,7 +15,7 @@
   width: 180px;
   height: 180px;
   font-size: 60px;
-  background-color: #333; /* Darker grey as seen in image */
+  background-color: #333;
   color: white;
   margin: 0;
   display: flex;
@@ -26,7 +26,7 @@
 /* Credentials section layout */
 .credentials-section {
   width: 100%;
-  max-width: 400px; /* Limits width to look like the image */
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -71,7 +71,7 @@
   margin-top: 20px;
 }
 
-/* Mobile override: Ensure content takes full width */
+/* Mobile and Desktop Responsiveness */
 @media (max-width: 860px) {
   .credentials-section {
     max-width: 100%;

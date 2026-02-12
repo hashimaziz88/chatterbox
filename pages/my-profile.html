@@ -9,18 +9,24 @@
     <link rel="stylesheet" href="../styles/my-profile.css" />
   </head>
   <body>
+
+    <!-- Container for Profile Page -->
     <div class="container-chats">
+
+      <!-- Left Sidebar for Contacts and Navigation -->
       <aside class="left-side-chats">
+        <!-- User Navigation and Profile Access -->
         <header class="sidebar-header">
           <nav class="user-nav">
             <a href="./my-profile.html" class="nav-button active-profile"
               >My Profile</a
             >
-            <a href="#" class="nav-button" style="visibility: hidden">Spacer</a>
+            <a class="nav-button" id="hidden-button"></a>
             <button id="logout-btn" class="nav-button">Logout</button>
           </nav>
         </header>
 
+        <!-- Chat Tabs -->
         <div class="chat-tabs">
           <a href="./main-chats.html?tab=online" class="tab-btn nav-button"
             >Online</a
@@ -32,10 +38,9 @@
             >Groups</a
           >
         </div>
-
-        <ul id="contact-list" class="contact-list"></ul>
       </aside>
 
+      <!-- Right Main Area for Profile Display and Editing -->
       <main class="right-side-chats">
         <header class="chat-header">
           <div class="active-user-info">
@@ -44,24 +49,19 @@
           </div>
         </header>
 
+        <!-- Profile Details Section -->
         <div class="profile-details-container">
           <div class="avatar" id="profile-display-avatar">F</div>
           
-          <div class="credentials-section">
+          <form class="credentials-section">
             <h3>Change - Credentials</h3>
             
             <div class="input-group">
               <label id="label-username">Current Username: testUser1</label>
               <input type="text" id="new-username" placeholder="Enter your new username">
             </div>
-
-            <div class="input-group">
-              <label id="label-email">Current email: testUser1@gmail.com</label>
-              <input type="email" id="new-email" placeholder="Enter your new email">
-            </div>
-
             <button id="save-profile-btn" class="save-btn">Save</button>
-          </div>
+          </form>
         </div>
       </main>
 

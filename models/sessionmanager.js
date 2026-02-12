@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 export class SessionManager {
   static login(user) {
     // sessionStorage keeps the user unique to the tab
