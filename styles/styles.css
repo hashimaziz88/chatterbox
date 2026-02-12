@@ -18,10 +18,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .right-side {
   display: none;
+  overflow: hidden;
 }
 
 .img-leave {
