@@ -30,6 +30,7 @@ initProfile();
  * Handles the profile saving process when the "Save" button is clicked. It retrieves the new username and email from the input fields,
  * creates an updated user object based on the active user's data, and updates the localStorage with the new information. If the username is changed,
  * it also updates the online status in the ChatStore. Finally, it updates the session storage with the new user data and reloads the page to reflect the changes.
+ * This function ensures that the user's profile information is accurately updated across the application, including their online status and any messages they have sent.
  */
 saveBtn.onclick = () => {
   const newUsername = document.getElementById("new-username").value.trim();
@@ -56,11 +57,18 @@ saveBtn.onclick = () => {
 
     SessionManager.login(updatedUser);
 
+    const allMessages = JSON.parse(localStorage.getItem("messages")) || [];
+    for (let i = 0; i < allMessages.length; i++) {
+      if (allMessages[i].sender === originalUsername) {
+        allMessages[i].sender = newUsername;
+      }
+    }
+    localStorage.setItem("messages", JSON.stringify(allMessages));
+
     alert("Profile saved successfully!");
     window.location.reload();
   }
 };
-
 
 /**
  * Handles the logout process when the "Logout" button is clicked. It updates the online status of the active user to false in the ChatStore and then calls the SessionManager's logout method to clear the session and redirect the user to the sign-in page.

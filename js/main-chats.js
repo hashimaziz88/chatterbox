@@ -17,24 +17,20 @@ const leftSidebar = document.querySelector(".left-side-chats");
 const rightChatArea = document.querySelector(".right-side-chats");
 const backBtn = document.getElementById("back-to-list");
 
-// 1. Initial Check: Redirect if not logged in
 if (!activeUser) {
   window.location.href = "sign-in.html";
 }
 
-// Initialize mobile view: show list, hide chat
 if (window.innerWidth <= 860) {
   rightChatArea.classList.add("hide-mobile");
 }
 
-// if (activeUser) {
-//   // Set status to true on every load/refresh
-//   ChatStore.setOnlineStatus(activeUser.username, true);
-// }
-// renderContacts();
-// renderMessages();
-
-// 2. Tab Switching Logic
+/**
+ * Tab Switching Logic: Adds click event listeners to the tab buttons (Online, Chats, Groups) that update the active tab state
+ * and re-render the contact list based on the selected tab. When a tab is clicked, it removes the "active" class from all buttons,
+ * adds it to the clicked button, updates the currentTab variable, and calls renderContacts() to display the appropriate contacts for that tab.
+ * This allows users to easily switch between viewing online users, all chats, and group chats within the chat application.
+ */
 const tabButtons = document.querySelectorAll(".tab-btn");
 tabButtons.forEach((btn) => {
   btn.addEventListener("click", (e) => {
@@ -45,7 +41,12 @@ tabButtons.forEach((btn) => {
   });
 });
 
-// 3. Contact Rendering Logic
+/**
+ * Renders the contact list based on the currently active tab (Online, Chats, Groups). It retrieves all users, online users, and groups from localStorage,
+ * then filters and displays the appropriate contacts based on the selected tab. For the "Online" tab, it shows only users who are currently online (excluding the active user).
+ *
+ * @returns rreturns nothing, but updates the DOM to display the contact list based on the active tab selection.
+ */
 const renderContacts = () => {
   const allUsers = JSON.parse(localStorage.getItem("users")) || [];
   const onlineNames = JSON.parse(localStorage.getItem("onlineUsers")) || [];
@@ -62,7 +63,6 @@ const renderContacts = () => {
   } else if (currentTab === "chats") {
     listToRender = allUsers.filter((u) => u.username !== activeUser.username);
   } else if (currentTab === "groups") {
-    // Add "Create Group" trigger
     const createLi = document.createElement("li");
     createLi.className = "contact-item create-group-trigger";
     createLi.innerHTML = `
@@ -74,7 +74,6 @@ const renderContacts = () => {
     createLi.onclick = openGroupModal;
     contactList.appendChild(createLi);
 
-    // List user-specific groups
     const myGroups = allGroups.filter((g) =>
       g.members.includes(activeUser.username),
     );
@@ -93,13 +92,11 @@ const renderContacts = () => {
     return;
   }
 
-  // Render Indvidual Online users or All users based on tab
   listToRender.forEach((user) => {
     const isOnline = onlineNames.includes(user.username);
     const li = document.createElement("li");
     li.className = `contact-item ${activeRecipient === user.username ? "active" : ""}`;
 
-    // Apply online-indicator class directly to the avatar div
     li.innerHTML = `
       <div class="avatar ${isOnline ? "online-indicator" : ""}">
         ${user.username.charAt(0).toUpperCase()}
@@ -113,11 +110,16 @@ const renderContacts = () => {
   });
 };
 
-// 4. Switch Chat Recipient (Updates title and avatar initials)
+/**
+ * Switches the active chat recipient and updates the UI accordingly.
+ *
+ * @param {string} recipient username or group ID of the new active chat recipient. If the recipient is a group, it updates the chat title
+ * and avatar to reflect the group name. If it's a user, it sets the chat title and avatar to the user's name. It also handles mobile view
+ * adjustments by showing/hiding the appropriate sections of the UI. Finally, it calls renderMessages() and renderContacts() to update the displayed messages and contact list based on the new active recipient.
+ */
 const switchChat = (recipient) => {
   activeRecipient = recipient;
 
-  // Mobile: Switch views
   if (window.innerWidth <= 860) {
     leftSidebar.classList.add("hide-mobile");
     rightChatArea.classList.remove("hide-mobile");
@@ -130,13 +132,11 @@ const switchChat = (recipient) => {
     const foundGroup = allGroups.find((g) => g.id === recipient);
 
     chatTitle.textContent = foundGroup ? foundGroup.name : "Unknown Group";
-    // Set Group Initial
     avatarHeader.textContent = foundGroup
       ? foundGroup.name.charAt(0).toUpperCase()
       : "G";
   } else {
     chatTitle.textContent = recipient;
-    // Set User Initial
     avatarHeader.textContent = recipient.charAt(0).toUpperCase();
   }
 
@@ -144,7 +144,14 @@ const switchChat = (recipient) => {
   renderContacts();
 };
 
-// 5. Message Rendering with Filtering
+/**
+ * Renders the chat messages for the currently active recipient (either a user or a group). It retrieves all messages from the ChatStore,
+ * filters them based on the active recipient, and displays them in the chat area. Messages sent by the active user are styled differently
+ * from received messages, and each message includes the sender's name, message text, and timestamp. After rendering the messages, it scrolls
+ * the chat area to the bottom to show the most recent messages.
+ *
+ * @returns returns nothing, but updates the DOM to display the chat messages for the active recipient.
+ */
 const renderMessages = () => {
   const allMessages = ChatStore.getMessages();
   chatMessages.innerHTML = "";
@@ -176,7 +183,11 @@ const renderMessages = () => {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 };
 
-// 6. Send Message Logic
+/**
+ * Handles the submission of a new message in the chat form.
+ *
+ * @param {Event} e The submit event triggered when the user submits a message.
+ */
 chatForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const text = messageInput.value.trim();
@@ -188,7 +199,11 @@ chatForm.addEventListener("submit", (e) => {
   }
 });
 
-// 7. Real-Time Sync
+/**
+ * Listens for changes in localStorage to update the chat messages and contact list in real-time across multiple tabs. When a change is detected in
+ * the "messages", "onlineUsers", * or "groups" keys, it calls renderMessages() and renderContacts() to refresh the displayed messages and contacts
+ * based on the latest data. This ensures that users see real-time  * updates to their chats and contact statuses even when they have multiple tabs open.
+ */
 window.addEventListener("storage", (event) => {
   if (
     event.key === "messages" ||
@@ -200,13 +215,23 @@ window.addEventListener("storage", (event) => {
   }
 });
 
-// 8. Logout Logic
+/**
+ * Handles the logout process when the "Logout" button is clicked. It updates the online status of the active user to false in the ChatStore and then calls
+ *  the SessionManager's *  logout method to clear the session and redirect the user to the sign-in page. * This ensures that the user's online status is
+ * accurately reflected in the chat application and that they are properly logged out of their session.* When the logout button is clicked, it first sets the
+ *  online status of the active user to false in the ChatStore, indicating that they are no longer online. Then, it calls SessionManager.logout() to clear any
+ * session data related to the user and redirect them back to the sign-in page, effectively logging them out of the application.
+ */
 document.getElementById("logout-btn").onclick = () => {
   ChatStore.setOnlineStatus(activeUser.username, false);
   SessionManager.logout();
 };
 
-// 9. Group Management Logic
+/**
+ * Opens the group creation modal and populates the user selection list with all users except the active user. When the "Create New Group" option is clicked,
+ * it retrieves all users from localStorage, filters out the active user, and creates a list of checkboxes for each remaining user. This allows the user to select
+ * which members they want to include in the new group chat. Finally, it removes the "hidden" class from the group modal to display it to the user.
+ */
 const openGroupModal = () => {
   const allUsers = JSON.parse(localStorage.getItem("users")) || [];
   userSelectionList.innerHTML = "";
@@ -226,6 +251,11 @@ const openGroupModal = () => {
   groupModal.classList.remove("hidden");
 };
 
+/**
+ * Handles the creation of a new group chat when the "Confirm Create Group" button is clicked. It retrieves the group name and selected members from the form,
+ * creates a new group object, and saves it to localStorage. After creating the group, it hides the modal, clears the form inputs, and re-renders the contact list
+ * to include the new group. This allows users to easily create new group chats and have them immediately available in their contact list.
+ */
 document.getElementById("confirm-create-group").onclick = () => {
   const groupName = document.getElementById("new-group-name").value.trim();
   const checkboxes = document.querySelectorAll(
@@ -250,23 +280,21 @@ document.getElementById("confirm-create-group").onclick = () => {
   }
 };
 
+/**
+ * Closes the group creation modal and clears the group name input field.
+ */
 document.getElementById("close-modal").onclick = () => {
   groupModal.classList.add("hidden");
   document.getElementById("new-group-name").value = "";
 };
 
-// // 10. Browser Exit Cleanup
-// window.addEventListener("beforeunload", () => {
-//   if (activeUser) {
-//     ChatStore.setOnlineStatus(activeUser.username, false);
-//   }
-// });
-
-// Back Button Logic
+/**
+ * Handles the back button functionality for mobile view. When the back button is clicked, it shows the left sidebar (contact list) and hides the right chat area.
+ */
 backBtn.onclick = () => {
   leftSidebar.classList.remove("hide-mobile");
   rightChatArea.classList.add("hide-mobile");
 };
-// Initial load
+
 renderContacts();
 renderMessages();
