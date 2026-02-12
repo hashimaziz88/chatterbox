@@ -31,46 +31,58 @@ initProfile();
  *  storage with the new user data and reloads the page to reflect the changes. * This function ensures that the user's profile information is accurately updated across
  *  the application, including their online status and any messages they have sent.
  */
-saveBtn.onclick = () => {
+saveBtn.onclick = (event) => {
+  event.preventDefault();
+
+  const messageEl = document.getElementById("save-message");
   const newUsername = document.getElementById("new-username").value.trim();
-  if (!User.isUsernameUnique(newUsername)) {
-    alert("Username is already in use. Please choose a different username.");
+
+  if (!User.isUsernameUnique(newUsername) && newUsername !== originalUsername) {
+    messageEl.textContent =
+      "Username already exists. Please choose a different one.";
+    messageEl.style.color = "red";
     return;
   }
+
   if (newUsername === "") {
-    alert("Username cannot be empty.");
+    messageEl.textContent = "Username cannot be empty.";
+    messageEl.style.color = "red";
     return;
   }
+
   const updatedUser = {
     ...activeUser,
-    username: newUsername || activeUser.username,
+    username: newUsername,
   };
 
   const allUsers = JSON.parse(localStorage.getItem("users")) || [];
-
   const userIndex = allUsers.findIndex((u) => u.username === originalUsername);
 
   if (userIndex !== -1) {
     allUsers[userIndex] = updatedUser;
     localStorage.setItem("users", JSON.stringify(allUsers));
 
-    if (newUsername && newUsername !== originalUsername) {
+    if (newUsername !== originalUsername) {
       ChatStore.setOnlineStatus(originalUsername, false);
       ChatStore.setOnlineStatus(newUsername, true);
+
+      const allMessages = JSON.parse(localStorage.getItem("messages")) || [];
+      allMessages.forEach((msg) => {
+        if (msg.sender === originalUsername) {
+          msg.sender = newUsername;
+        }
+      });
+      localStorage.setItem("messages", JSON.stringify(allMessages));
     }
 
     SessionManager.login(updatedUser);
 
-    const allMessages = JSON.parse(localStorage.getItem("messages")) || [];
-    for (let i = 0; i < allMessages.length; i++) {
-      if (allMessages[i].sender === originalUsername) {
-        allMessages[i].sender = newUsername;
-      }
-    }
-    localStorage.setItem("messages", JSON.stringify(allMessages));
+    messageEl.textContent = "Profile saved successfully! Reloading...";
+    messageEl.style.color = "green";
 
-    alert("Profile saved successfully!");
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   }
 };
 
