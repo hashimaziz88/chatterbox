@@ -29,11 +29,11 @@ ChatterBox provides:
 
 To run and develop ChatterBox locally, ensure your machine meets the following requirements:
 
+- **Node.js & npm**: For executing Script on browser and machine. Available at [nodejs.org](https://nodejs.org/)`.
 - **Modern Web Browser**: A recent version of [Google Chrome](https://www.google.com/chrome/), [Mozilla Firefox](https://www.mozilla.org/firefox/), or [Microsoft Edge](https://www.microsoft.com/edge) is required to support ES6 modules and the `storage` event API.
 - **Code Editor**: [Visual Studio Code (VS Code)](https://code.visualstudio.com/) is the recommended editor for this project.
 - **Live Server Extension**: For VS Code users, the [Live Server extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) (by Ritwick Dey) is required for automatic browser reloading.
 - **Python 3.x** (Optional): Available at [python.org](https://www.python.org/downloads/). Required if you prefer to serve the application via the terminal using the `http.server` module.
-- **Node.js & npm** (Optional): Available at [nodejs.org](https://nodejs.org/). Useful if you prefer using `npx serve`.
 - **Git**: Available at [git-scm.com](https://git-scm.com/). Required for cloning the repository and managing branch deployments to GitHub Pages.
 
 ---
@@ -129,3 +129,5 @@ python3 -m http.server 5500
 - **Inspect Storage**: Use DevTools → Application → `localStorage` to see the JSON data.
 - **Verify Sync**: Open two browser tabs side-by-side to verify real-time messaging and online rings.
 - **Clear Session**: If you are stuck, clear `sessionStorage` or use the **Logout** button to reset your active session.
+
+---
