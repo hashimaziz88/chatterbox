@@ -337,6 +337,10 @@ ul li {
     width: 100%;
   }
 
+  .right-side-chats-hidden {
+    display: none;
+  }
+
   .container-chats {
     flex-direction: column;
   }
