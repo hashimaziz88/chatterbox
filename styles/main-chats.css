@@ -84,7 +84,9 @@ ul li {
 }
 
 .chat-display {
-  width: 80%;
+  width: 100%;
+  padding: 20px;
+  overflow: auto;
 }
 
 .chat-tabs {
@@ -153,20 +155,32 @@ ul li {
   padding: 10px;
   background-color: #f0f2f5;
   height: 7.5%;
+  gap: 10px;
 }
 
 #message-input {
-  width: 80%;
-  height: 100%;
-  border-radius: 7.5px;
-  padding-left: 50px;
+  flex: 1;
+  height: 40px;
+  border-radius: 20px;
+  padding: 0 20px;
+  border: 1px solid #ddd;
+  outline: none;
 }
-
 .message-wrapper {
   display: flex;
   width: 100%;
   margin-bottom: 8px;
 }
+
+#send-btn {
+  width: 80px; /* Fixed width for the button */
+  height: 40px;
+  margin: 0; /* Remove default nav-button margins */
+  background-color: #3a5b22; /* Use your brand green */
+  color: white;
+  border: none;
+}
+
 
 .message-wrapper.sent {
   justify-content: flex-end;
