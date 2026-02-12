@@ -40,7 +40,6 @@ export class User {
    */
   static isEmailUnique(email) {
     const users = JSON.parse(localStorage.getItem("users")) || [];
-    console.log(!users.some((u) => u.email === email));
     return !users.some((u) => u.email === email);
   }
 
