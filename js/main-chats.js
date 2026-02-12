@@ -16,6 +16,8 @@ const userSelectionList = document.getElementById("user-selection-list");
 const leftSidebar = document.querySelector(".left-side-chats");
 const rightChatArea = document.querySelector(".right-side-chats");
 const backBtn = document.getElementById("back-to-list");
+const main = document.querySelector("main");
+let lastWidth = window.innerWidth;
 
 if (!activeUser) {
   window.location.href = "sign-in.html";
@@ -27,18 +29,31 @@ if (!activeUser) {
  *  If the window width is greater than 860 pixels, it ensures that both the left sidebar and right chat area are visible for desktop users. This
  *  function is called on page load and also whenever the window is resized to maintain a responsive design.
  */
+
+/**
+ * Initializes the mobile view only when the window width actually changes.
+ * This prevents the mobile keyboard from resetting the view to the contact list.
+ */
 const initMobileView = () => {
-  if (window.innerWidth <= 860) {
-    leftSidebar.classList.remove("hide-mobile");
-    rightChatArea.classList.add("hide-mobile");
-  } else {
-    leftSidebar.classList.remove("hide-mobile");
-    rightChatArea.classList.remove("hide-mobile");
+  const currentWidth = window.innerWidth;
+
+  if (currentWidth !== lastWidth) {
+    if (currentWidth <= 860) {
+      if (!activeRecipient || activeRecipient === "online") {
+        leftSidebar.classList.remove("hide-mobile");
+        rightChatArea.classList.add("hide-mobile");
+      }
+    } else {
+      main.classList.remove("right-side-chats-hidden");
+      leftSidebar.classList.remove("hide-mobile");
+      rightChatArea.classList.remove("hide-mobile");
+    }
+
+    lastWidth = currentWidth;
   }
 };
 
 initMobileView();
-
 window.addEventListener("resize", initMobileView);
 
 /**
@@ -155,6 +170,7 @@ const switchChat = (recipient) => {
   } else {
     chatTitle.textContent = recipient;
     avatarHeader.textContent = recipient.charAt(0).toUpperCase();
+    main.classList.remove("right-side-chats-hidden");
   }
 
   renderMessages();
