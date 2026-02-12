@@ -1,5 +1,6 @@
 body {
-  background-color: #efeae2;
+  background-image: url("../assets/images/Whatsapp\ Original\ Wallpaper.jpg");
+  background-size: auto;
 }
 
 .container-chats {
@@ -16,6 +17,10 @@ body {
   display: flex;
   flex-direction: column;
   background-color: white;
+  /* Branding Implementation */
+  background-image: url("../assets/images/leaves.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .right-side-chats {
@@ -24,7 +29,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 100%;
+  height: 100vh;
 }
 nav,
 .nav-chats {
@@ -35,7 +40,12 @@ nav,
 }
 
 #hidden-button {
-  visibility: hidden;
+  background-color: white;
+  background-image: url("../assets/images/logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
 }
 
 /* 
@@ -81,6 +91,7 @@ ul li {
 .chat-header {
   width: 100%;
   padding: 10px;
+  background-color: #d0c9be;
 }
 
 .chat-display {
@@ -173,14 +184,13 @@ ul li {
 }
 
 #send-btn {
-  width: 80px; /* Fixed width for the button */
+  width: 80px;
   height: 40px;
-  margin: 0; /* Remove default nav-button margins */
-  background-color: #3a5b22; /* Use your brand green */
+  margin: 0;
+  background-color: #3a5b22;
   color: white;
   border: none;
 }
-
 
 .message-wrapper.sent {
   justify-content: flex-end;
@@ -217,6 +227,8 @@ ul li {
   align-items: center;
   justify-content: center;
   width: 100%;
+  background-color: white;
+  opacity: 0.95;
 }
 
 .contact-item {

@@ -24,12 +24,14 @@
   margin-bottom: 1rem;
 }
 
+
+
 .landing-box-sign-in {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding: 0 0 100px 0;
+  padding: 0 0 0 0;
 }
 
 .have-text-box {

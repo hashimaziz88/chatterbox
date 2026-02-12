@@ -8,10 +8,10 @@
   font-style: normal;
 }
 
-
 .container {
   display: flex;
   height: 100vh;
+  background-size: cover;
 }
 
 .left-side {
@@ -40,7 +40,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  margin-bottom: 100px;
+  margin-bottom: 30px;
 }
 
 .landing-button-box {
@@ -71,6 +71,11 @@
   width: 80%;
 }
 
+.img-logo {
+  align-self: center;
+  width: 50%;
+}
+
 /* Mobile and Desktop Responsiveness */
 @media screen and (min-width: 992px) {
   .right-side {
@@ -78,5 +83,9 @@
   }
   .left-box {
     width: 60%;
+  }
+
+  .container {
+    background-image: none;
   }
 }
