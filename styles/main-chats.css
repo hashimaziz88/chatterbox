@@ -296,13 +296,11 @@ ul li {
     margin-right: 10px;
   }
 
-  /* Hide the side not currently active */
   .left-side-chats.hide-mobile,
   .right-side-chats.hide-mobile {
     display: none;
   }
 
-  /* Ensure the active side takes full width */
   .left-side-chats,
   .right-side-chats {
     flex: 1;
