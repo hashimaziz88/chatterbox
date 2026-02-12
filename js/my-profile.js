@@ -1,5 +1,6 @@
 import { ChatStore } from "../models/chatstore.js";
 import { SessionManager } from "../models/sessionmanager.js";
+import { User } from "../models/user.js";
 
 const activeUser = SessionManager.getActiveUser();
 const saveBtn = document.getElementById("save-profile-btn");
@@ -32,7 +33,14 @@ initProfile();
  */
 saveBtn.onclick = () => {
   const newUsername = document.getElementById("new-username").value.trim();
-
+  if (!User.isUsernameUnique(newUsername)) {
+    alert("Username is already in use. Please choose a different username.");
+    return;
+  }
+  if (newUsername === "") {
+    alert("Username cannot be empty.");
+    return;
+  }
   const updatedUser = {
     ...activeUser,
     username: newUsername || activeUser.username,

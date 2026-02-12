@@ -246,6 +246,7 @@ ul li {
   width: 100%;
   background-color: white;
   opacity: 0.95;
+  overflow: auto;
 }
 
 .contact-item {

@@ -23,11 +23,17 @@ document
       return;
     }
 
+    if (!User.isEmailUnique(hashedEmail)) {
+      messageEl.textContent = "Email already exists!";
+      messageEl.style.color = "red";
+      return;
+    }
+
     const newUser = new User(username, hashedEmail, hashedPassword);
     User.register(newUser);
 
     messageEl.textContent = "Sign up successful! You can now log in.";
     messageEl.style.color = "green";
 
-    this.reset();
+    event.target.reset();
   });
