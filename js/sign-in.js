@@ -1,6 +1,7 @@
 import { User } from "../models/user.js";
 import { SessionManager } from "../models/sessionmanager.js";
 import { ChatStore } from "../models/chatstore.js";
+import { sha256 } from "../utils/encrypt.js";
 
 /**
  * Handles the submission of the sign-in form. It prevents the default form submission behavior, retrieves the username and password from the input fields,
@@ -8,33 +9,36 @@ import { ChatStore } from "../models/chatstore.js";
  * the user's information in session storage using SessionManager, updates the online status in the ChatStore, and redirects the user to the main chats page
  * after a short delay. If authentication fails, it displays an error message indicating invalid credentials. Finally, it clears the form inputs.
  */
-document.getElementById("signin-form").addEventListener("submit", (event) => {
-  event.preventDefault();
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-  const messageEl = document.getElementById("signInMessage");
+document
+  .getElementById("signin-form")
+  .addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const messageEl = document.getElementById("signInMessage");
+    const hashedPassword = await sha256(password);
 
-  const foundUser = User.authenticate(username, password);
+    const foundUser = User.authenticate(username, hashedPassword);
 
-  if (foundUser) {
-    messageEl.textContent = "Login successful! Welcome, " + username;
-    messageEl.style.color = "green";
+    if (foundUser) {
+      messageEl.textContent = "Login successful! Welcome, " + username;
+      messageEl.style.color = "green";
 
-    SessionManager.login(foundUser);
+      SessionManager.login(foundUser);
 
-    ChatStore.setOnlineStatus(foundUser.username, true);
+      ChatStore.setOnlineStatus(foundUser.username, true);
 
-    redirectToHome();
-  } else {
-    messageEl.textContent = "Invalid username or password!";
-    messageEl.style.color = "red";
-  }
+      redirectToHome();
+    } else {
+      messageEl.textContent = "Invalid username or password!";
+      messageEl.style.color = "red";
+    }
 
-  this.reset();
-});
+    this.reset();
+  });
 
 /**
- * Redirects the user to the main chats page after a short delay. This function is called after a successful login to give the user feedback before navigating 
+ * Redirects the user to the main chats page after a short delay. This function is called after a successful login to give the user feedback before navigating
  * to the next page.
  */
 const redirectToHome = () => {

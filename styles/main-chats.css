@@ -48,6 +48,10 @@ nav,
   border: none;
 }
 
+.new-group-name {
+  border-radius: 7.5px;
+}
+
 /* 
 Had issues with button styling based off of buttons from styles.css, so I created a new class for the buttons in the nav bar.
 */
